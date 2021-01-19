@@ -27,22 +27,36 @@ function optionChanged() {
         var idLookup = dropdownMenu.property("value");
         var data = importedData;
         var demoInfo = d3.select("#sample-metadata");
+        var barVis = d3.select("#bar");
+
 
         console.log(idLookup);
-        var filteredData = data.metadata.filter(person => person.id == idLookup);
-        console.log(filteredData);
+        var filteredMetadata = data.metadata.filter(person => person.id == idLookup);
+        // console.log(filteredMetadata);
 
-        // filteredData.forEach((person) => {
-        //     console.log(person)
-        //     Object.entries(person).forEach(([key, value]) => {
-        //         demoInfo.append("p").text(`${key}: ${value}`)
-        //     })
-        // })
+
+        var filteredSampleData = data.samples.filter(person => person.id == idLookup);
+
+        topBacteriaId = filteredSampleData[0].otu_ids.slice(0, 10).reverse();
+        topBacteriaValues = filteredSampleData[0].sample_values.slice(0,10).reverse();
+
+
         demoInfo.html("");
 
-        Object.entries(filteredData[0]).forEach(([key, value]) => {
+        Object.entries(filteredMetadata[0]).forEach(([key, value]) => {
             demoInfo.append("p").text(`${key}: ${value}`)
         });
+
+        var topOtuData = [{
+            x: topBacteriaValues,
+            y: topBacteriaId.map(bact => "OTU " + bact),
+            text: topBacteriaId.map(bact => "OTU " + bact),
+            name: "OTU",
+            type: "bar",
+            orientation: "h"
+        }];
+
+        Plotly.newPlot("bar", topOtuData)
 
     });
 
