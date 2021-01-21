@@ -1,4 +1,4 @@
-
+d3.select("#selDataset").on("change", optionChanged)
 
 
 // function to initiate the data to html page
@@ -14,7 +14,7 @@ function optionChanged() {
 
     d3.json("samples.json").then((importedData) => {
         var data = importedData;
-        d3.select("#selDataset").on("change", optionChanged)
+
         var dropdownMenu = d3.select("#selDataset");
         
         data.names.forEach(name => {
