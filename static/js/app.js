@@ -12,7 +12,7 @@ function init() {
 function optionChanged() {
     // d3.event.preventDefault();
 
-    d3.json("/samples.json").then((importedData) => {
+    d3.json("../samples.json").then((importedData) => {
         var data = importedData;
 
         var dropdownMenu = d3.select("#selDataset");
